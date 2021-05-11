@@ -6,7 +6,7 @@ class SujetoAbstracto {
         this.vx = 0
         this.vy = 0
         this.vida = 100
-        this.observadoresDeMuertes = []
+        this.observadorMuertes = []
         this.movedor = movedor
         this.contexto = null
         this.masa = 1
@@ -63,7 +63,7 @@ class SujetoAbstracto {
     }
 
     cuandoMuere(observador) {
-        this.observadoresDeMuertes.push(observador)
+        this.ObservadorMuertes.push(observador)
     }
 
     dibujar() {
@@ -73,10 +73,6 @@ class SujetoAbstracto {
         point(this.x,this.y);
         pop()
     }
-}
-
-class Contexto {
-     constructor ()
 }
 
 class Movimiento {
@@ -157,7 +153,7 @@ class SujetoTanque extends SujetoAbstracto {
     }
 
     dibujar() {
-        this.arma.disparar()
+        this.arma.disparar(this)
         circle(this.x, this.y, this.diametro)
     }
 
@@ -186,12 +182,12 @@ class SujetoTanque extends SujetoAbstracto {
             tanque.sacarVida(tanque.dameVida())
         }
     }
-
+/*
     chocarBoost(boost) {
         boost.chocarBala(this)
-    }
+    }*/
 }
-
+/*
 class Boost extends SujetoAbstracto {
     constructor(x, y, lado, mangnitud) {
         super(x, y, null, null)
@@ -251,7 +247,7 @@ class Boost extends SujetoAbstracto {
     tick() {
         this.dibujar()
     }
-}
+} */
 
 class BalaRapida extends SujetoAbstracto {
     constructor(x, y, direccion) {
@@ -314,8 +310,8 @@ class BalaRapida extends SujetoAbstracto {
 }
 
 class SujetoLiviano extends SujetoAbstracto {
-    contructor(x, y, movedor, arma) {
-        super(x, y, movedor, arma)
+    contructor(x, y, movedor) {
+        super(x, y, movedor)
         this.vx = Math.random() + 1
         this.vy = Math.random() + 1
         this.diametro = 10
@@ -327,7 +323,7 @@ class SujetoLiviano extends SujetoAbstracto {
     }
 
     chocar(otrosujeto) {
-        return tankque.chocarLiviano(this)
+        return otrosujeto.chocarLiviano(this)
     }
 
     chocarTanque(tanque){
@@ -390,8 +386,8 @@ class Equipo extends SujetoAbstracto {
         // Queda vacio porque no existe
     }
 
-    setContexto() {
-        this.contexto = this.contexto
+    setContexto(contexto) {
+        this.contexto = contexto
         for(let i = 0; i < sujetos.length; i++) {
             this.sujetos[i].setContexto(this.contexto)
         }
@@ -405,7 +401,7 @@ class Equipo extends SujetoAbstracto {
 
     cuandoMuere (observador) {
         for(let i = 0; i < this.sujetos.length; i++) {
-            this.sujetos[i]-this.cuandoMuere(observador)
+            this.sujetos[i].this.cuandoMuere(observador)
         }
     }
  
@@ -427,6 +423,7 @@ class Equipo extends SujetoAbstracto {
     disparar() {
         for (let i = 0; i < this.sujetos.length; i ++) {
             this.sujetos[i].disparar()
+        }
     }
  
     tick() {
@@ -460,15 +457,21 @@ class Equipo extends SujetoAbstracto {
     chocarBala(bala) {
         chocar.chocar(bala)
     }
-
+/*
     chocarBoost(boost) {
 
     }
- 
+ */
 }
 
-class observadoresDeMuertes {
-
+class ObservadorMuertes {
+    observadorMuertes = 0
+    notificarMuerte() {
+        this.observadorMuertes++
+    }
+    dibujar() {
+        text('muertes: ${this.observadorMuertes}' , 25, 50)
+    }
 }
 
 class Arma {
