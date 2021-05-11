@@ -3,10 +3,10 @@ let dibujables = []
  
 function setup() {
     createCanvas(400, 400)
-    
+    /*
     sujetos.push(new Boost(10, 350, 100, 2))
     sujetos.push(new Boost(250, 10, 100, -0.1))
-
+*/
     let sujetos1 = []
     let sujetos2 = []
 
@@ -60,7 +60,7 @@ function setup() {
     let observador1 = new ObservadorMuertes(10, 10, colorEquipo1, "Equipo Frutas")
     dibujables.push(observador1)
 
-    let observador2 = new ObservadorMuertes(200, 10 colorEquipo2, "Equipo Verduras")
+    let observador2 = new ObservadorMuertes(200, 10, colorEquipo2, "Equipo Verduras")
     dibujables.push(observador2)
     
     let equipo1 = new Equipo(sujeto1, colorEquipo1)
